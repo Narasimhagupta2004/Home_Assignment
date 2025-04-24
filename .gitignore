@@ -1,0 +1,5 @@
+# Node modules (auto-generated dependencies)
+node_modules/
+
+# Environment variables (secrets!)
+.env
