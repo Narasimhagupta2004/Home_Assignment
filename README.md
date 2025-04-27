@@ -18,8 +18,8 @@ This project is a simple RESTful API service designed to log and manage hypothet
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repository-link>
-cd <your-repository-name>
+git clone https://github.com/Narasimhagupta2004/Home_Assignment.git
+cd Home_Assignment
 ```
 
 ### 2. Install dependencies
