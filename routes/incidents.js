@@ -1,20 +1,23 @@
 const express = require('express');
 const router = express.Router();
-// Import controller functions
-const { getAllIncidents, getIncidentById, createIncident, deleteIncident } = require('../controllers/IncidentController');
 
-// Route to get all incidents
+const {
+  getAllIncidents,
+  getIncidentById,
+  createIncident,
+  deleteIncident
+} = require('../controllers/IncidentController');
+
+// Get all reported incidents
 router.get('/', getAllIncidents);
 
-// Route to get a specific incident by ID
+// Get a single incident by its ID
 router.get('/:id', getIncidentById);
 
-// Route to create a new incident
+// Create a new incident entry
 router.post('/', createIncident);
 
-// Route to delete an incident by ID
+// Delete an incident by its ID
 router.delete('/:id', deleteIncident);
 
-// Export the router to be used in the main server file
 module.exports = router;
-
