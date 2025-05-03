@@ -1,67 +1,71 @@
 const Incident = require('../models/Incident');
 
-// Get all incidents
+// Retrieve all incidents from the database
 const getAllIncidents = async (req, res) => {
     try {
-        const incidents = await Incident.find();  // Query the database for all incidents
-        res.status(200).json(incidents);  // Send a successful response with all incidents data
+        const incidents = await Incident.find();
+        res.status(200).json(incidents);
     } catch (error) {
-        console.error('Error fetching incidents:', error);  // Log error for debugging
-        res.status(500).json({ message: 'Server Error' });  // Send error response if something goes wrong
+        console.error('Error fetching incidents:', error);
+        res.status(500).json({ message: 'Server Error' });
     }
 };
 
-// Get a single incident by ID
+// Retrieve a specific incident by its ID
 const getIncidentById = async (req, res) => {
     try {
-        const incident = await Incident.findById(req.params.id);  // Fetch a specific incident from DB by ID
+        const incident = await Incident.findById(req.params.id);
         if (!incident) {
-            return res.status(404).json({ message: 'Incident not found' });  // Return 404 if incident not found
+            return res.status(404).json({ message: 'Incident not found' });
         }
-        res.status(200).json(incident);  // Return the found incident in the response
+        res.status(200).json(incident);
     } catch (error) {
-        console.error('Error fetching incident:', error);  // Log error for debugging
-        res.status(500).json({ message: 'Server Error' });  // Handle server errors
+        console.error('Error fetching incident:', error);
+        res.status(500).json({ message: 'Server Error' });
     }
 };
 
-// Create a new incident
+// Create and store a new incident entry
 const createIncident = async (req, res) => {
     try {
-        const { title, description, severity } = req.body;  // Extract data from request body
+        const { title, description, severity } = req.body;
 
-        // Validate input data
+        // Basic validation to ensure required fields are present and severity is valid
         if (!title || !description || !['Low', 'Medium', 'High'].includes(severity)) {
-            return res.status(400).json({ message: 'Invalid data provided' });  // Return 400 for invalid data
+            return res.status(400).json({ message: 'Invalid data provided' });
         }
 
-        const newIncident = new Incident({ title, description, severity });  // Create a new incident object
-        await newIncident.save();  // Save the new incident to the database
+        const newIncident = new Incident({ title, description, severity });
+        await newIncident.save();
 
         res.status(201).json({
-            message: 'Incident created successfully',  // Confirm success
-            incident: newIncident  // Return the created incident in response
+            message: 'Incident created successfully',
+            incident: newIncident
         });
     } catch (error) {
-        console.error('Error creating incident:', error);  // Log error for debugging
-        res.status(500).json({ message: 'Server Error' });  // Handle server errors
+        console.error('Error creating incident:', error);
+        res.status(500).json({ message: 'Server Error' });
     }
 };
 
-// Delete an incident by ID
+// Delete an existing incident by its ID
 const deleteIncident = async (req, res) => {
     try {
-        const incident = await Incident.findByIdAndDelete(req.params.id);  // Find and delete incident by ID
-
+        const incident = await Incident.findByIdAndDelete(req.params.id);
         if (!incident) {
-            return res.status(404).json({ message: 'Incident not found' });  // Return 404 if no incident found
+            return res.status(404).json({ message: 'Incident not found' });
         }
 
-        res.status(200).json({ message: 'Incident deleted successfully' });  // Confirm deletion success
+        res.status(200).json({ message: 'Incident deleted successfully' });
     } catch (error) {
-        console.error('Error deleting incident:', error);  // Log error for debugging
-        res.status(500).json({ message: 'Server Error' });  // Handle server errors
+        console.error('Error deleting incident:', error);
+        res.status(500).json({ message: 'Server Error' });
     }
 };
 
-module.exports = { getAllIncidents, getIncidentById, createIncident, deleteIncident };
+module.exports = {
+    getAllIncidents,
+    getIncidentById,
+    createIncident,
+    deleteIncident
+};
