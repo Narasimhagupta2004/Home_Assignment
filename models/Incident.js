@@ -1,32 +1,31 @@
 const mongoose = require('mongoose');
 
-// Define the schema for an Incident
 const IncidentSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,  // Title of the incident
-      required: true  // Title is mandatory
+    title: {                                          //required: true means mandatory need to give the input
+      type: String,
+      required: true  // Incident must have a title
     },
     description: {
-      type: String,  // Detailed description of the incident
-      required: true  // Description is mandatory
+      type: String,
+      required: true  // A detailed description is mandatory for context
     },
     severity: {
-      type: String,  // Severity level of the incident (Low, Medium, High)
-      enum: ['Low', 'Medium', 'High'],  // Allow only these values
-      required: true  // Severity is mandatory
+      type: String,
+      enum: ['Low', 'Medium', 'High'],  // Restrict values to predefined severity levels
+      required: true
     },
     reported_at: {
-      type: Date,  // Timestamp for when the incident was reported
-      default: Date.now,  // Set current time as default if not provided
-      required: true  // Reported date is mandatory
+      type: Date,
+      default: Date.now,  // Defaults to the current time incident happened
+      required: true
     }
   },
-  { timestamps: true }  // Automatically add createdAt and updatedAt fields
+  {
+    timestamps: true  // Adds createdAt and updatedAt fields automatically
+  }
 );
 
-// Create the model using the schema
 const Incident = mongoose.model('Incident', IncidentSchema);
 
-// Export the model for use in other parts of the application
 module.exports = Incident;
